@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useGetUserID } from "../hooks/useGetUserID";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // import { useCookies } from "react-cookie";
 
 export const CreateRecipe = () => {
@@ -16,6 +16,7 @@ export const CreateRecipe = () => {
     userOwner: userID,
   });
 
+  const navigate = useNavigate();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -28,7 +29,7 @@ export const CreateRecipe = () => {
     ingredients[idx] = value;
     setRecipe({ ...recipe, ingredients });
   };
-  console.log(recipe)
+  console.log(recipe);
 
   const addIngredient = () => {
     setRecipe({ ...recipe, ingredients: [...recipe.ingredients, ""] });
@@ -39,6 +40,7 @@ export const CreateRecipe = () => {
     try {
       await axios.post("http://localhost:3001/recipes", recipe);
       alert("Recipe Created");
+      navigate("/");
     } catch (err) {
       console.log(err);
     }
